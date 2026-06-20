@@ -24,10 +24,9 @@ RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | \
     apt-get update && apt-get install -y --no-install-recommends gh && \
     rm -rf /var/lib/apt/lists/*
 
-ARG ENGRAM_VERSION=v1.17.0
-RUN ENGRAM_VERSION=${ENGRAM_VERSION} && \
-    VERSION_NO_V=$${ENGRAM_VERSION#v} && \
-    curl -fsSL "https://github.com/Gentleman-Programming/engram/releases/download/$${ENGRAM_VERSION}/engram_$${VERSION_NO_V}_linux_amd64.tar.gz" \
+# Engram v1.17.0 — single Go binary, no deps
+# Actualizar version: cambiar los dos numeros abajo (tag y filename)
+RUN curl -fsSL "https://github.com/Gentleman-Programming/engram/releases/download/v1.17.0/engram_1.17.0_linux_amd64.tar.gz" \
       -o /tmp/engram.tar.gz && \
     tar -xzf /tmp/engram.tar.gz -C /tmp && \
     mv /tmp/engram /usr/local/bin/engram && \
