@@ -6,17 +6,17 @@ y los coding agents (Claude Code, Command Code, OpenCode)
 estan horneados en la imagen para implementar features
 directamente a repos desde el contenedor.
 
-## Stack incluido
+## Filosofia: Hermes es el cerebro — los coding agents son las manos
 
-| Tool | Proposito | Auth |
-|------|-----------|------|
-| **Hermes Agent** | Orquestador principal. Recibe ordenes via Telegram, API, Dashboard. | OpenRouter |
-| **Claude Code** | Coding agent de Anthropic | ANTHROPIC_API_KEY |
-| **Command Code (cmd)** | Coding agent via OpenRouter | OPENROUTER_API_KEY |
-| **OpenCode** | Coding agent open-source | Provider config |
-| **GitHub CLI (gh)** | Clonar, commit, crear PRs | GH_TOKEN o SSH |
-| **pnpm** | Package manager para Next.js/NestJS | N/A |
-| **Engram** | Memoria persistente para coding agents (MCP) | N/A (local SQLite) |
+| Tool | Rol | Auth |
+|------|-----|------|
+| **Hermes Agent** | 🧠 Orquestador — SDD, memoria, delegacion | OpenRouter |
+| **Claude Code** | 🖐 Ejecutor | ANTHROPIC_API_KEY |
+| **Command Code (cmd)** | 🖐 Ejecutor | OPENROUTER_API_KEY |
+| **OpenCode** | 🖐 Ejecutor multi-provider | Env vars |
+| **Engram** | 🧠 Memoria MCP para Hermes | N/A (SQLite local) |
+| **GitHub CLI (gh)** | 🔧 Clonar, PRs, issues | GH_TOKEN |
+| **pnpm** | 🔧 Package manager | N/A |
 
 ## Puertos expuestos
 
