@@ -106,6 +106,23 @@ Todo eso se reinstala en cada build del Dockerfile.
 
 Configuracion actual: 4 GB / 2 cores.
 
+
+
+## Post-deploy (una sola vez)
+
+Despues del primer deploy, ejecuta esto para configurar los agents:
+
+```bash
+docker exec dani_hermes configure-agents
+```
+
+Esto registra los providers en OpenCode, autentica GitHub CLI,
+y configura git con tu nombre/email. Es idempotente — podés
+correrlo todas las veces que quieras.
+
+Si preferis que Hermes mismo lo haga cuando necesite usar un agent,
+simplemente decile: "ejecuta configure-agents".
+
 ## Como usarlo
 
 Mandas una orden por Telegram o via API:
