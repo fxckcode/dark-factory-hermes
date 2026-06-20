@@ -1,0 +1,19 @@
+# Dark Factory — Hermes Agent
+# Excluir archivos sensibles y locales
+
+# Environment (contiene secrets reales)
+.env
+
+# Docker (no necesario si Dokploy build desde repo)
+# *.tar
+# *.tar.gz
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
