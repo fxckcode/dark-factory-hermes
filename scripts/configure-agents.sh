@@ -16,45 +16,16 @@ echo "=== Configurando coding agents ==="
 if command -v opencode &>/dev/null; then
     echo "[opencode] Verificando providers..."
 
-    # OpenRouter (para cmd/hermes)
-    if [ -n "${OPENROUTER_API_KEY}" ]; then
-        if opencode auth list 2>/dev/null | grep -q openrouter; then
-            echo "[opencode] openrouter ya configurado"
-        else
-            echo "[opencode] Registrando openrouter..."
-            opencode auth add openrouter --api-key "${OPENROUTER_API_KEY}"
-        fi
-    fi
+    # OpenCode lee API keys directamente de env vars.
+    # No necesita 'auth add' — usa las variables del entorno.
+    # Verificamos que esten presentes:
+    [ -n "${OPENROUTER_API_KEY}" ] && echo "[opencode] OPENROUTER_API_KEY: configurado" || echo "[opencode] OPENROUTER_API_KEY: FALTA"
+    [ -n "${ANTHROPIC_API_KEY}" ] && echo "[opencode] ANTHROPIC_API_KEY: configurado" || echo "[opencode] ANTHROPIC_API_KEY: FALTA"
+    [ -n "${DEEPSEEK_API_KEY}" ] && echo "[opencode] DEEPSEEK_API_KEY: configurado" || echo "[opencode] DEEPSEEK_API_KEY: FALTA"
+    [ -n "${OPENCODE_GO_API_KEY}" ] && echo "[opencode] OPENCODE_GO_API_KEY: configurado" || echo "[opencode] OPENCODE_GO_API_KEY: FALTA"
 
-    # Anthropic (para Claude)
-    if [ -n "${ANTHROPIC_API_KEY}" ]; then
-        if opencode auth list 2>/dev/null | grep -q anthropic; then
-            echo "[opencode] anthropic ya configurado"
-        else
-            echo "[opencode] Registrando anthropic..."
-            opencode auth add anthropic --api-key "${ANTHROPIC_API_KEY}"
-        fi
-    fi
-
-    # DeepSeek
-    if [ -n "${DEEPSEEK_API_KEY}" ]; then
-        if opencode auth list 2>/dev/null | grep -q deepseek; then
-            echo "[opencode] deepseek ya configurado"
-        else
-            echo "[opencode] Registrando deepseek..."
-            opencode auth add deepseek --api-key "${DEEPSEEK_API_KEY}"
-        fi
-    fi
-
-    # OpenCode Go (el provider que usas actualmente)
-    if [ -n "${OPENCODE_GO_API_KEY}" ]; then
-        if opencode auth list 2>/dev/null | grep -q opencode-go; then
-            echo "[opencode] opencode-go ya configurado"
-        else
-            echo "[opencode] Registrando opencode-go..."
-            opencode auth add opencode-go --api-key "${OPENCODE_GO_API_KEY}"
-        fi
-    fi
+    # Para login OAuth a opencode.dev (opcional, solo si usas su servicio cloud):
+    # opencode auth login
 else
     echo "[opencode] No instalado, saltando..."
 fi
