@@ -43,6 +43,18 @@ RUN curl -fsSL "https://github.com/Gentleman-Programming/engram/releases/downloa
     rm /tmp/engram.tar.gz && \
     engram version
 
+# 7b. Gentle-AI — ecosystem configurator (SDD, skills, engram MCP)
+# Inyecta SDD sub-agents, skills, persona, y cablea engram MCP
+# en Claude Code, OpenCode, y otros agents.
+RUN curl -fsSL "https://github.com/Gentleman-Programming/gentle-ai/releases/download/v1.41.0/gentle-ai_1.41.0_linux_amd64.tar.gz" \
+      -o /tmp/gentle-ai.tar.gz && \
+    tar -xzf /tmp/gentle-ai.tar.gz -C /tmp && \
+    mv /tmp/gentle-ai /usr/local/bin/gentle-ai && \
+    chmod +x /usr/local/bin/gentle-ai && \
+    rm /tmp/gentle-ai.tar.gz && \
+    gentle-ai version 2>/dev/null || echo "gentle-ai v1.41.0 installed"
+
+
 # 8. Bootstrap script — configura agents en runtime
 COPY scripts/configure-agents.sh /usr/local/bin/configure-agents
 RUN chmod +x /usr/local/bin/configure-agents

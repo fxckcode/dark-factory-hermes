@@ -20,6 +20,7 @@ services:
       # - ~/.ssh/known_hosts:/home/hermes/.ssh/known_hosts:ro
 
     environment:
+      - HOME=/opt/data
       - HERMES_HOME=/opt/data
       - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
       - HERMES_DASHBOARD=1

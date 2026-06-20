@@ -45,6 +45,28 @@ if command -v engram &>/dev/null; then
     echo "[engram] Instalado y listo"
 fi
 
+
+# --- Gentle-AI ---
+# Inyecta SDD sub-agents, skills, persona, y cablea engram MCP
+# en Claude Code y OpenCode.
+if command -v gentle-ai &>/dev/null; then
+    echo "[gentle-ai] Instalando SDD + skills + engram MCP en los agents..."
+
+    if command -v claude &>/dev/null; then
+        echo "[gentle-ai] Configurando Claude Code..."
+        gentle-ai install --agents claude --scope global 2>&1 || echo "[gentle-ai] Claude: Ya configurado o sin cambios"
+    fi
+
+    if command -v opencode &>/dev/null; then
+        echo "[gentle-ai] Configurando OpenCode..."
+        gentle-ai install --agents opencode --scope global 2>&1 || echo "[gentle-ai] OpenCode: Ya configurado o sin cambios"
+    fi
+
+    echo "[gentle-ai] Listo — SDD, skills, y engram MCP inyectados"
+else
+    echo "[gentle-ai] No instalado, saltando..."
+fi
+
 # --- GitHub CLI ---
 if command -v gh &>/dev/null && [ -n "${GH_TOKEN}" ]; then
     if gh auth status &>/dev/null 2>&1; then
