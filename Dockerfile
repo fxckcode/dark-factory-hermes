@@ -55,12 +55,45 @@ RUN curl -fsSL "https://github.com/Gentleman-Programming/gentle-ai/releases/down
     gentle-ai version 2>/dev/null || echo "gentle-ai v1.41.0 installed"
 
 
-# 8. Bootstrap script — configura agents en runtime
+
+
+# 8. Gentle-AI assets — SDD agents, skills, persona, engram MCP
+# Descargamos el repo como tarball (mas rapido que git clone)
+# y copiamos los assets a /opt/data para que persistan.
+RUN mkdir -p /opt/data/.claude/agents \
+             /opt/data/.claude/commands \
+             /opt/data/.claude/mcp \
+             /opt/data/.claude/output-styles \
+             /opt/data/.claude/skills && \
+    mkdir -p /opt/data/.config/opencode/commands \
+             /opt/data/.config/opencode/plugins && \
+    curl -fsSL https://github.com/Gentleman-Programming/gentle-ai/archive/refs/heads/main.tar.gz | \
+      tar -xz -C /tmp && \
+    SRC=/tmp/gentle-ai-main/internal/assets && \
+    cp $SRC/claude/agents/*.md /opt/data/.claude/agents/ && \
+    cp $SRC/claude/commands/*.md /opt/data/.claude/commands/ && \
+    cp $SRC/claude/persona-gentleman.md /opt/data/.claude/CLAUDE.md && \
+    cp $SRC/claude/sdd-orchestrator.md /opt/data/.claude/ && \
+    cp $SRC/claude/engram-protocol.md /opt/data/.claude/ && \
+    cp $SRC/claude/output-style-*.md /opt/data/.claude/output-styles/ && \
+    cp $SRC/opencode/persona-gentleman.md /opt/data/.config/opencode/ && \
+    cp $SRC/opencode/sdd-orchestrator.md /opt/data/.config/opencode/ && \
+    cp $SRC/opencode/sdd-overlay-*.json /opt/data/.config/opencode/ && \
+    cp $SRC/opencode/commands/*.md /opt/data/.config/opencode/commands/ && \
+    cp -r $SRC/opencode/plugins/* /opt/data/.config/opencode/plugins/ && \
+    echo '{"mcpServers":{"engram":{"command":"engram","args":["mcp"]}}}' \
+      > /opt/data/.claude/mcp/engram.json && \
+    rm -rf /tmp/gentle-ai-main && \
+    chown -R hermes:hermes /opt/data/.claude /opt/data/.config && \
+    echo "Gentle-AI assets baked: $(ls /opt/data/.claude/agents/ | wc -l) agents"
+
+
+# 9. Bootstrap script — configura agents en runtime
 COPY scripts/configure-agents.sh /usr/local/bin/configure-agents
 RUN chmod +x /usr/local/bin/configure-agents
 
-# 9. Workspace directory
+# 10. Workspace directory
 RUN mkdir -p /opt/workspaces && chown hermes:hermes /opt/workspaces
 
-# 10. Cleanup
+# 11. Cleanup
 RUN npm cache clean --force

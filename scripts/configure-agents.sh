@@ -46,25 +46,20 @@ if command -v engram &>/dev/null; then
 fi
 
 
-# --- Gentle-AI ---
-# Inyecta SDD sub-agents, skills, persona, y cablea engram MCP
-# en Claude Code y OpenCode.
-if command -v gentle-ai &>/dev/null; then
-    echo "[gentle-ai] Instalando SDD + skills + engram MCP en los agents..."
-
-    if command -v claude &>/dev/null; then
-        echo "[gentle-ai] Configurando Claude Code..."
-        gentle-ai install --agents claude --scope global 2>&1 || echo "[gentle-ai] Claude: Ya configurado o sin cambios"
-    fi
-
-    if command -v opencode &>/dev/null; then
-        echo "[gentle-ai] Configurando OpenCode..."
-        gentle-ai install --agents opencode --scope global 2>&1 || echo "[gentle-ai] OpenCode: Ya configurado o sin cambios"
-    fi
-
-    echo "[gentle-ai] Listo — SDD, skills, y engram MCP inyectados"
+# --- Gentle-AI assets ---
+# Los assets (SDD agents, persona, engram protocol, skills, MCP config)
+# ya estan horneados en la imagen en /opt/data/.claude/ y /opt/data/.config/opencode/.
+# Solo verificamos que esten presentes.
+if [ -f /opt/data/.claude/CLAUDE.md ]; then
+    echo "[gentle-ai] Claude Code assets: OK (CLAUDE.md + agents + commands + engram MCP)"
 else
-    echo "[gentle-ai] No instalado, saltando..."
+    echo "[gentle-ai] Claude Code assets: FALTAN — ejecuta 'gentle-ai install --agents claude --scope global'"
+fi
+
+if [ -f /opt/data/.config/opencode/persona-gentleman.md ]; then
+    echo "[gentle-ai] OpenCode assets: OK (persona + SDD + plugins)"
+else
+    echo "[gentle-ai] OpenCode assets: FALTAN — ejecuta 'gentle-ai install --agents opencode --scope global'"
 fi
 
 # --- GitHub CLI ---
