@@ -20,12 +20,12 @@ RUN npm install -g @anthropic-ai/claude-code@latest
 RUN npm install -g command-code@latest
 
 # 4. OpenCode
-# El script instala en $HOME/.opencode/bin/. Forzamos HOME=/tmp/oc
-# y movemos el binario a /usr/local/bin.
-RUN HOME=/tmp/oc curl -fsSL https://raw.githubusercontent.com/anomalyco/opencode/refs/heads/dev/install | bash && \
-    mv /tmp/oc/.opencode/bin/opencode /usr/local/bin/opencode && \
+# El script instala en $HOME/.opencode/bin/ (durante build: /root/.opencode/bin/).
+# Lo movemos a /usr/local/bin para que quede en PATH de todos los usuarios.
+RUN curl -fsSL https://raw.githubusercontent.com/anomalyco/opencode/refs/heads/dev/install | bash && \
+    mv /root/.opencode/bin/opencode /usr/local/bin/opencode && \
     chmod +x /usr/local/bin/opencode && \
-    rm -rf /tmp/oc/.opencode && \
+    rm -rf /root/.opencode && \
     opencode version
 
 # 5. pnpm
