@@ -1,9 +1,9 @@
 services:
-  dani_hermes:
+  dark_hermes:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: dani_hermes
+    container_name: dark_hermes
     restart: unless-stopped
     command: gateway run
 
@@ -12,7 +12,7 @@ services:
       - "9120:9120"
 
     volumes:
-      - dani_hermes_data:/opt/data
+      - dark_hermes_data:/opt/data
       # Workspaces (descomentar para montar codigo local):
       # - ./workspaces:/opt/workspaces
       # SSH key para git (descomentar si prefieres SSH sobre GH_TOKEN):
@@ -49,5 +49,5 @@ services:
           cpus: "2.0"
 
 volumes:
-  dani_hermes_data:
+  dark_hermes_data:
     driver: local
